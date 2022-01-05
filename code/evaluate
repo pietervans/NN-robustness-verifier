@@ -1,0 +1,17 @@
+#!/bin/bash
+
+echo '' > helpers_evaluation/results.txt
+
+for net in fc1 fc2 fc3 fc4 fc5
+do
+	for k in 0 1;
+	do
+		echo Evaluating network net${k}_${net}
+		for spec in `ls ../test_cases/net${k}_${net}`
+		do
+			echo $(python verifier.py --net net${k}_${net} --spec ../test_cases/net${k}_${net}/${spec}) >> helpers_evaluation/results.txt
+		done
+	done
+done
+
+python helpers_evaluation/score.py
